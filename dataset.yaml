@@ -1,0 +1,11 @@
+# Veri seti yapılandırması
+
+# Klasör yolları (baret_dataset klasörüne göre)
+train: train/images
+val: valid/images
+
+# Sınıf sayısı
+nc: 1
+
+# Sınıf isimleri
+names: ['baret']
