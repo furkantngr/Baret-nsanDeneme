@@ -15,8 +15,7 @@ Bu proje, inşaat sahaları, fabrikalar ve depolar gibi iş güvenliğinin kriti
 
 ## 🛠️ Teknik Mimari: Çift Modelli Yaklaşım
 
-Sistem, modülerlik ve yeniden etiketleme maliyetini ortadan kaldırmak için iki ayrı YOLOv8 modelini eş zamanlı olarak kullanır. Bu mimari, Apple M Serisi (M3 Pro) çiplerin sağladığı MPS (Metal Performance Shaders) donanım hızlandırması sayesinde yüksek performansla çalışır.
-
+Sistem, modülerlik ve yeniden etiketleme maliyetini ortadan kaldırmak için iki ayrı YOLOv8 modelini eş zamanlı olarak kullanır.
 1.  **Baret Modeli (Özel Model):**
     * **Dosya:** `best.pt`
     * **Görev:** Kullanıcının kendi (CVAT ile etiketlenmiş) verisiyle eğitilmiş, **sadece 'baret'** nesnesini yüksek doğrulukla tanımaya odaklanmış özel bir modeldir.
