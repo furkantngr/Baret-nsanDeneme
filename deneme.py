@@ -9,11 +9,11 @@ import cv2
 
 # --- 1. AYARLAR ---
 # ÇÖZÜM 2: SyntaxWarning'i düzeltmek için tırnak başına 'r' ekleyin
-model_path = r'C:\baret_dataset\runs\detect\train3\weights\best.pt'
+model_path = r'C:\git\Baret-nsanDeneme\best.pt'
 
 # Webcam kullanmak için: 0
 # Video dosyası kullanmak için: "videom.mp4"
-video_source = 0 
+video_source = r'C:\git\Baret-nsanDeneme\test.mp4' 
 # --------------------
 
 
