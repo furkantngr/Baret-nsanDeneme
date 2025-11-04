@@ -20,15 +20,26 @@ PERSON_GUVEN_ESIGI = 0.25
 # Uyarı Süresi
 UYARI_SURESI = 10  # saniye
 
-logging.basicConfig(
-    level=logging.INFO,  # Hangi seviyedeki logları tutacağı (INFO ve üzeri)
-    format="%(asctime)s [%(levelname)s] - %(message)s", # Log formatı (Tarih - Seviye - Mesaj)
-    handlers=[
-        logging.FileHandler("is_guvenligi.log", mode='a', encoding='utf-8') # Dosyaya yaz
-        # İsteğe bağlı: Terminale de basmak için bunu ekleyebilirsiniz
-        # logging.StreamHandler(sys.stdout) 
-    ]
-)
+log_format = "%(asctime)s [%(levelname)s] - %(message)s"
+formatter = logging.Formatter(log_format)
+
+# Dosya yöneticisini (handler) oluştur
+file_handler = logging.FileHandler("is_guvenligi.log", mode='a', encoding='utf-8')
+file_handler.setFormatter(formatter)
+
+# Kök (root) logger'ı al
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
+if logger.hasHandlers():
+    logger.handlers.clear()
+    
+# Sadece bizim dosya handler'ımızı ekle
+logger.addHandler(file_handler)
+# --- / LOGLAMA AYARI ---
+
+
+
 
 # Renkler (BGR formatında)
 RENKLER = {
@@ -423,8 +434,16 @@ class MainWindow(QMainWindow):
     @pyqtSlot(str)
     def log_alert(self, message):
         self.log_box.append(message)
-        self.log_box.verticalScrollBar().setValue(self.log_box.verticalScrollBar().maximum()) 
-
+        self.log_box.verticalScrollBar().setValue(self.log_box.verticalScrollBar().maximum())
+        clean_message = message.strip() # Baştaki/sondaki boşlukları temizle
+        if "[UYARI]" in clean_message:
+            logging.warning(clean_message)
+        elif "[HATA]" in clean_message:
+            logging.error(clean_message)
+        elif "[BİLGİ]" in clean_message:
+            logging.info(clean_message)
+        else:
+            logging.info(clean_message)
     @pyqtSlot()
     def processing_finished(self):
         self.log_alert("İşlem durduruldu veya bitti.")
@@ -445,12 +464,6 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     
-    # --- YENİ EKLENEN MODERN TEMA KODU ---
-    from qt_material import apply_stylesheet
-    # 'dark_blue.xml', 'dark_red.xml', 'light_blue.xml' gibi birçok tema var.
-    apply_stylesheet(app, theme='dark_blue.xml')
-    # --- / YENİ KOD ---
-
     window = MainWindow()
     window.show()
     sys.exit(app.exec())
